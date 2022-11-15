@@ -4,6 +4,7 @@
 {%block title%} Последние обновления на сайте {%endblock%}
 {%block content%}
   <head>
+    <h3> Последние обновления на сайте </h3>
   </head>
   <body>
     <main>
@@ -11,12 +12,6 @@
         <article>
           {% include 'includes/event_structure.html' %}
         </article>
-        {% if event.category.title != None %}
-        <a href="{% url 'events:category_list' event.category.slug %}"> все записи в категории </a>
-        {% else %}
-        <p>
-          категория не установлена
-        </p>
-        {% endif %}
+        {% include 'includes/paginator.html' %}
       </div>  
 {%endblock%}

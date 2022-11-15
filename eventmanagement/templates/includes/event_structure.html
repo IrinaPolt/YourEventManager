@@ -1,0 +1,9 @@
+<article>
+    {% for event in event_list %}
+      <p> {{ event.name }} </p>
+      <p> {{event.datetime}} </p>
+      <p> {{ event.text }} </p>
+      <img src="{{MEDIA_URL}}{{event.image.url}}" style="width: 350px; height: 400px;"/>
+      {% if not forloop.last %}<hr>{% endif %}
+    {% endfor %}
+  </article>

@@ -1,0 +1,72 @@
+<!DOCTYPE html> 
+<html lang="ru">
+{%extends 'base.html'%}
+{%block title%} Новое мероприятие {% endblock %}
+{% block content %}
+<body>
+  <main>
+    <div class="container py-5">
+      <div class="row justify-content-center">
+        <div class="col-md-8 p-5">
+          <div class="card">
+            <div class="card-header">       
+              Новое мероприятие            
+            </div>
+            <div class="card-body">
+              <form method="post" action="{% url 'events:event_create' %}">
+                {% csrf_token %}
+                {% for field in form %}
+                  <div class="form-group row my-3 p-3">
+                    {% if field.label == 'Category' %}
+                      <select name="category" class="form-control" required id="id_category">
+                        <option value="{{ form.category.value}}"> {{ object.category}} </option>
+                          {% for category in categories.all %}
+                            <option value="{{category.pk}}">{{category.pk}} -- {{ category.name }}</option>
+                          {% endfor %}
+                      </select>
+                      <small id="id_category-help" class="form-text text-muted">
+                        Категория, к которой будет относиться мероприятие
+                      </small>
+                    {% elif field.label == 'Name' %}
+                      {{ field }}
+                      <small id="id_text-help" class="form-text text-muted">
+                        Название предстоящего мероприятия
+                      </small>
+                    {% elif field.label == 'Text' %}
+                      {{ field }}
+                      <small id="id_text-help" class="form-text text-muted">
+                        Описание предстоящего мероприятия
+                      </small>
+                    {% elif field.label == 'Datetime' %}
+                      {{ field }}
+                      <small id="id_text-help" class="form-text text-muted">
+                        Дата и время предстоящего мероприятия
+                      </small>
+                    {% elif field.label == 'Image' %}
+                      {{ field }}
+                      <small id="id_text-help" class="form-text text-muted">
+                        Изображение
+                      </small>
+                    {% endif %}
+                  </div>
+                {% endfor %}          
+              </form>
+            </div>
+          </div>
+          <br>
+          <div class="d-flex justify-content-end">
+            <button type="submit" class="btn btn-primary">
+              {% if is_edit %}
+                Сохранить
+              {% else %}
+                Добавить
+              {% endif %}               
+            </button> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</body>
+{% endblock %}
+</html>
