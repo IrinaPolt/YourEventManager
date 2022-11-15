@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="ru">
+{%extends 'base.html'%}
+{%block header%} {{ category.name }} {%endblock%}
+{%block content%}
+  <div class="container py-5">
+    <h1> Записи в категории {{ category.name }} </h1>
+    <p>
+      {{ category.text }}
+    </p>
+    <article>
+      {% for event in events %}
+        <ul>
+          <li>
+            Дата мероприятия: {{datetime}}
+          </li>
+        </ul>
+        <p> {{ event.text }} </p>
+        {% if not forloop.last %}<hr>{% endif %}
+      {% endfor %}
+    </article>
+  </div>
+{% endblock %}

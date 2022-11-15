@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ru">
+{%extends 'base.html'%}
+{%block title%} Последние обновления на сайте {%endblock%}
+{%block content%}
+  <head>
+  </head>
+  <body>
+    <main>
+      <div class="container py-5">     
+        <article>
+          {% include 'includes/event_structure.html' %}
+        </article>
+        {% if event.category.title != None %}
+        <a href="{% url 'events:category_list' event.category.slug %}"> все записи в категории </a>
+        {% else %}
+        <p>
+          категория не установлена
+        </p>
+        {% endif %}
+      </div>  
+{%endblock%}
