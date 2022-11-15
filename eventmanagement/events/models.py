@@ -35,8 +35,6 @@ class Event(models.Model):
     datetime = models.DateTimeField()
     category = models.ManyToManyField(
         Category,
-        blank=True,
-        null=True,
         through='EventCategory')
     image = models.ImageField()
 

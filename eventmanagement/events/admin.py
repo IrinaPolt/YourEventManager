@@ -5,10 +5,8 @@ from .models import Event, Category
 class EventAdmin(admin.ModelAdmin):
     list_display = ('name',
                     'text',
-                    'datetime',
-                    'category')
-    list_editable = ('category',)
-    search_fields = ('name', 'category')
+                    'datetime')
+    search_fields = ('name', )
     empty_value_display = '-пусто-'
 
 

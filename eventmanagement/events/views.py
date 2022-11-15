@@ -26,7 +26,7 @@ def category_list(request):
     return render(request, 'events/category_list.html')
 
 
-def category_posts(request, slug):
+def category_events(request, slug):
     category = get_object_or_404(Category, slug=slug)
     events = category.events.all().order_by('-pk')
     paginator = Paginator(events, PAGE_NMB)
