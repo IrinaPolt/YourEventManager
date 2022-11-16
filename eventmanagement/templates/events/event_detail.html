@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ru">
+{% extends 'base.html' %}
+{%block title %} Запись мероприятия {%endblock%}
+{%block content%}
+  <body>       
+    <main>
+      <div class="row">
+        <aside class="col-12 col-md-3">
+            <p> Дата и время проведения: {{ event.date }} {{ event.time}} </p>
+            <p> Категория: 
+                {% if event.category.name == None %} 
+                  категория не установлена
+                {% else %}
+                  <a href="{% url 'events:category_list' event.category.slug %}"> {{ event.category.name }} </a>
+                {% endif %} </p>
+            <p> Автор: {% if event.author != None %} 
+                <a href="{% url 'events:profile' event.author %}"> {{ event.author.username }} </a>
+              {% else %}
+                admin 
+              {% endif %} </p>
+            <p> Всего мероприятий автора:  <span> {{ events_count }} </span>
+        </aside>
+        <article class="col-12 col-md-9">
+          <p> {{ event.text }} </p>
+          <p> <img src="{{MEDIA_URL}}{{event.image.url}}" width="400" height="300"/> </p>
+          {% if event.author == request.user %}
+            <a class="nav-link" href="{% url 'events:event_edit' event.id %}">Редактировать запись</a>
+            <p class="deletelink-box"><a href="/events/{{event.id}}/delete/" class="deletelink">Удалить</a></p>
+          {% endif %}
+        </article>
+      </div>
+    </main>
+  </body>
+{% endblock %}
+</html>

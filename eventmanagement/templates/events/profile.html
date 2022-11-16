@@ -1,28 +1,24 @@
 <!DOCTYPE html>
 <html lang="ru">
 {%extends 'base.html'%}
-{%block title%} Профайл пользователя {{ author.get_full_name }} {%endblock%}
+{%block title%} Профайл пользователя {{ author.username }} {%endblock%}
 {%block content%}
   <div class="container py-5">
-    <h1>Все мероприятия пользователя {{ author.get_full_name }} </h1>
-      <h3>Всего мероприятий: {{ events_count }} </h3>   
+    <span style="font-size: 33px !important; font-family: Arial, Helvetica, sans-serif; color:rgb(227, 10, 64)">Все мероприятия пользователя {{ author.username }} </span></a>
+    <br>
+    <span style="font-size: 22px !important; font-family: Arial, Helvetica, sans-serif; color:rgb(125, 13, 156)">Всего мероприятий: {{ events_count }} </span></a>   
+      <br>
+      <br>
         <article>
           {% for event in page_obj %}
-            <ul>
-              <li>
-                Дата проведения: {{event.datetime}}
-              </li>
-            </ul>
-            <p> {{ event.text }} </p>
-            <a href="{% url 'events:event_detail' event.id %}"> подробная информация </a>
-            <br>
-            {% if event.category.name != None %}
-              <a href="{% url 'events:category_list' event.category.slug %}"> все мероприятия в категории </a>
-            {% else %}
-              <p> категория не установлена </p>
-            {% endif %}
-            {% if not forloop.last %}<hr>{% endif %}
-          {% endfor %}
+          <p> Название: {{ event.name }} </p>
+          <p> Дата: {{event.date}} </p>
+          <p> Время: {{event.time}} </p>
+          <p> Описание: {{ event.text }} </p>
+          <img src="{{MEDIA_URL}}{{event.image.url}}" width="400" height="300"/>
+          <p> <a href="{% url 'events:event_detail' event.id %}"> подробная информация </a> </p>
+          {% if not forloop.last %}<hr>{% endif %}
+        {% endfor %}
         </article>       
         {% include 'includes/paginator.html' %}
   </div>

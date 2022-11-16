@@ -4,18 +4,21 @@
 {%block header%} {{ category.name }} {%endblock%}
 {%block content%}
   <div class="container py-5">
-    <h1> Записи в категории {{ category.name }} </h1>
+      <span style="font-size: 33px !important; font-family: Arial, Helvetica, sans-serif; color:rgb(123, 17, 162)"> {{ category.name }} </span>
+    <br>
+    <br>
     <p>
       {{ category.text }}
     </p>
+    <hr>
     <article>
-      {% for event in events %}
-        <ul>
-          <li>
-            Дата мероприятия: {{datetime}}
-          </li>
-        </ul>
-        <p> {{ event.text }} </p>
+      {% for event in page_obj %}
+        <p> Название: {{ event.name }} </p>
+        <p> Дата: {{event.date}} </p>
+        <p> Время: {{event.time}} </p>
+        <p> Описание: {{ event.text }} </p>
+        <img src="{{MEDIA_URL}}{{event.image.url}}" width="400" height="300"/>
+        <p> <a href="{% url 'events:event_detail' event.id %}"> подробная информация </a> </p>
         {% if not forloop.last %}<hr>{% endif %}
       {% endfor %}
     </article>

@@ -7,7 +7,7 @@ User = get_user_model()
 
 class Category(models.Model):
     name = models.CharField(max_length=50)
-    text = models.TextField()
+    text = models.TextField(null=True, blank=True)
     slug = models.SlugField(
         unique=True,
     )
@@ -32,10 +32,12 @@ class Event(models.Model):
         verbose_name='Название мероприятия'
     )
     text = models.TextField()
-    datetime = models.DateTimeField()
-    category = models.ManyToManyField(
+    date = models.DateField()
+    time = models.TimeField()
+    category = models.ForeignKey(
         Category,
-        through='EventCategory')
+        on_delete=models.DO_NOTHING,
+        related_name='events')
     image = models.ImageField()
 
     class Meta:
@@ -45,24 +47,3 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
-
-
-
-class EventCategory(models.Model):
-    """Вспомогательная модель для категорий мероприятий."""
-    event = models.ForeignKey(
-        Event,
-        on_delete=models.CASCADE
-    )
-    category = models.ForeignKey(
-        Category,
-        on_delete=models.CASCADE
-    )
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['event', 'category'],
-                name='unique_event_category'
-            )
-        ]

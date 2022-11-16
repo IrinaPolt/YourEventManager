@@ -71,9 +71,11 @@ def event_detail(request, event_id):
 @login_required
 def event_create(request):
     if request.method == 'POST':
-        form = EventForm(request.POST)
+        form = EventForm(request.POST or None,
+                         files=request.FILES or None)
         if form.is_valid():
             event = form.save(commit=False)
+            event.category.id = request.POST.get('category')
             event.author = request.user
             event.save()
             return redirect('events:profile',
@@ -81,26 +83,37 @@ def event_create(request):
         return render(request, 'events/create_event.html',
                       {'form': form})
     else:
-        form = EventForm()
+        form = EventForm(request.POST or None,
+                         files=request.FILES or None)
         return render(request, 'events/create_event.html',
                       {'form': form})
 
 
+@login_required
 def event_edit(request, event_id):
-    event = get_object_or_404(Event, id=event_id)
+    event = get_object_or_404(Event, pk=event_id)
     is_edit = True
-    if request.user != event.author:
-        return redirect('events:event_detail', event.pk)
-    if request.method != 'POST':
-        form = EventForm(instance=event)
-        return render(request, 'events/create_event.html',
-                      {'form': form, 'is_edit': is_edit, 'event': event})
-    form = EventForm(request.POST, instance=event)
-    if form.is_valid():
-        event = form.save(commit=False)
-        event.category = event.category
-        event.save()
-        return redirect('events:event_detail',
-                        event_id=event.id)
-    return render(request, 'events/create_event.html',
-                  {'form': form, 'is_edit': is_edit, 'event': event})
+    if event.author != request.user:
+        return redirect('events:event_detail', event_id=event_id)
+    else:
+        request.method == 'POST'
+        form = EventForm(
+            request.POST or None,
+            files=request.FILES or None,
+            instance=event)
+        if not form.is_valid():
+            return render(request, 'events/update_event.html',
+                          {'form': form, 'is_edit': is_edit, 'event': event})
+        else:
+            form.save()
+            return redirect('events:event_detail', event_id=event_id)
+
+
+@login_required
+def event_delete(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    if event.author != request.user:
+        return redirect('events:event_detail', event_id=event_id)
+    else:
+        event.delete()
+        return redirect('events:index')

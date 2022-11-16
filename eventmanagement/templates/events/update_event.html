@@ -1,19 +1,19 @@
 <!DOCTYPE html> 
 <html lang="ru">
 {%extends 'base.html'%}
-{%block title%} Новое мероприятие {% endblock %}
+{%block title%} Редактировать мероприятие {% endblock %}
 {% block content %}
-<body>
+<body>	   
   <main>
     <div class="container py-5">
       <div class="row justify-content-center">
         <div class="col-md-8 p-5">
           <div class="card">
             <div class="card-header">       
-              Новое мероприятие            
+              Редактировать мероприятие           
             </div>
-            <div class="card-body">
-              <form method="post" enctype="multipart/form-data" action="{% url 'events:event_create' %}">
+            <div class="card-body">        
+              <form method="post" enctype="multipart/form-data" action="{% url 'events:event_edit' event.id %}">
                 {% csrf_token %}
                 {% for field in form %}
                   <div class="form-group row my-3 p-3">
@@ -67,7 +67,6 @@
               </form>
             </div>
           </div>
-          <br>
         </div>
       </div>
     </div>

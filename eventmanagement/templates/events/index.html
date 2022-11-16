@@ -4,14 +4,16 @@
 {%block title%} Последние обновления на сайте {%endblock%}
 {%block content%}
   <head>
-    <h3> Последние обновления на сайте </h3>
+    <span style="font-size: 33px !important; font-style: italic; font-family: Arial, Helvetica, sans-serif; color:rgb(227, 10, 64)">Последние обновления на сайте</span></a>
   </head>
   <body>
     <main>
-      <div class="container py-5">     
-        <article>
-          {% include 'includes/event_structure.html' %}
-        </article>
+      <div class="container py-3">
+        <div class="row">   
+          <article>
+            {% include 'includes/event_structure.html' %}
+          </article>
+        </div>
         {% include 'includes/paginator.html' %}
       </div>  
 {%endblock%}

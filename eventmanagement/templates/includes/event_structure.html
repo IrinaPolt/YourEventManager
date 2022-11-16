@@ -1,9 +1,12 @@
 <article>
     {% for event in event_list %}
-      <p> {{ event.name }} </p>
-      <p> {{event.datetime}} </p>
-      <p> {{ event.text }} </p>
-      <img src="{{MEDIA_URL}}{{event.image.url}}" style="width: 350px; height: 400px;"/>
+      <p> Автор: <a href="{% url 'events:profile' event.author %}"> {{ event.author.username }} </a> </p>
+      <p> Название: {{ event.name }} </p>
+      <p> Дата: {{event.date}} </p>
+      <p> Время: {{event.time}} </p>
+      <p> Описание: {{ event.text }} </p>
+      <img src="{{MEDIA_URL}}{{event.image.url}}" width="400" height="300"/>
+      <p> <a href="{% url 'events:event_detail' event.id %}"> подробная информация </a> </p>
       {% if not forloop.last %}<hr>{% endif %}
     {% endfor %}
   </article>
