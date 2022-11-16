@@ -59,7 +59,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'eventmanagement.wsgi.application'
 
 
-
 DATABASES = {
     'default': {
         'ENGINE': os.getenv('DB_ENGINE'),
@@ -70,7 +69,6 @@ DATABASES = {
         'PORT': os.getenv('DB_PORT')
     }
 }
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
