@@ -1,12 +1,11 @@
-<article>
-    {% for event in event_list %}
-      <p> Автор: <a href="{% url 'events:profile' event.author %}"> {{ event.author.username }} </a> </p>
-      <p> Название: {{ event.name }} </p>
-      <p> Дата: {{event.date}} </p>
-      <p> Время: {{event.time}} </p>
-      <p> Описание: {{ event.text }} </p>
-      <img src="{{MEDIA_URL}}{{event.image.url}}" width="400" height="300"/>
-      <p> <a href="{% url 'events:event_detail' event.id %}"> подробная информация </a> </p>
-      {% if not forloop.last %}<hr>{% endif %}
-    {% endfor %}
-  </article>
+<div class="card">
+  <div class="card-body">
+    <h4 class="card-title"> Автор: <a href="{% url 'events:profile' event.author.username %}"> {{ event.author.username }} </a> </h4>
+    <h3 class="card-subtitle mb-2"> Название: {{ event.name }} </h3>
+    <h5 class="card-subtitle mb-2 text-muted"> Время: {{ event.time}} </h5>
+    <h5 class="card-subtitle mb-2 text-muted"> Дата: {{ event.date}} </h5>
+    <p class="card-text"> {{event.text}} </p>
+    <img class="card-img-bottom" src="{{MEDIA_URL}}{{event.image.url}}" width="400" height="300">
+    <p> <a href="{% url 'events:event_detail' event.id %}" class="card-link"> Подробная информация</a> </p>
+  </div>
+</div>

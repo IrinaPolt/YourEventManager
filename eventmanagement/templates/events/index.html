@@ -8,12 +8,14 @@
   </head>
   <body>
     <main>
-      <div class="container py-3">
-        <div class="row">   
-          <article>
-            {% include 'includes/event_structure.html' %}
-          </article>
+      {% for event in page_obj %}
+        <div class="row">
+          <div class="col-md-6 col-xl-3">
+            <article>
+              {% include 'includes/event_structure.html' %}
+            </article>
+          </div>
         </div>
-        {% include 'includes/paginator.html' %}
-      </div>  
+      {% endfor %}
+      {% include 'includes/paginator.html' %}
 {%endblock%}
